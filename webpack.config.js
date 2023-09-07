@@ -3,14 +3,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.js",
+    entry: "./src/app/index.js",
     devtool: "inline-source-map",
     devServer: {
         static: "./dist",
+        watchFiles: ["./src/app/*.html"],
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: "Todo List",
+            template: "./src/app/index.html",
         }),
     ],
     output: {
