@@ -31,6 +31,7 @@ export default class Task {
         });
 
         let leftSide = document.createElement("div");
+        leftSide.classList.add(...["flex", "justify-center", "items-center"]);
         let checkButton = document.createElement("button");
         checkButton.classList.add(
             ...[

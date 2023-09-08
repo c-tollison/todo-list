@@ -5,13 +5,55 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
-    <body class="text-white">
+    <body class="text-[#fffffe] bg-[#16161a]">
         <div id="task-container"></div>
         <button
             id="add-task-button"
-            class="bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded"
+            class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border py-2 px-4 rounded"
         >
             Click me to add item
         </button>
+
+        <div
+            id="taskModal"
+            tabindex="-1"
+            class="hidden fixed w-full h-full z-50 inset-0 flex justify-center items-center"
+        >
+            <form
+                class="w-full max-w-lg px-4 py-4 rounded border border-zinc-800"
+            >
+                <input
+                    class="appearance-none bg-transparent border-b border-[#7f5af0] w-full mr-3 py-1 px-2 focus:outline-none"
+                    type="text"
+                    placeholder="Task Name"
+                />
+                <input
+                    class="appearance-none bg-transparent border-b border-[#7f5af0] w-full mr-3 py-1 px-2 focus:outline-none"
+                    type="text"
+                    placeholder="Description"
+                />
+                <div class="flex w-full">
+                    <input
+                        class="appearance-none bg-transparent border-b border-[#7f5af0] mr-3 py-1 px-2 focus:outline-none w-36"
+                        type="date"
+                        placeholder="Description"
+                    />
+
+                    <div class="relative w-36">
+                        <select
+                            class="appearance-none bg-transparent border-b border-[#7f5af0] mr-3 py-1 px-2 focus:outline-none w-36"
+                        >
+                            >
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2"
+                        ></div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </body>
 </html>
