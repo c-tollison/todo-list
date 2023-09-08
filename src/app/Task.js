@@ -1,10 +1,10 @@
 export default class Task {
     //TODO: ADD PROJECT IT IS ON
-    constructor(title, description, dueDate, priority) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
+    constructor(formValues) {
+        this.name = formValues.name;
+        this.description = formValues.description;
+        this.dueDate = formValues.dueDate;
+        this.priority = formValues.priority;
     }
 
     renderTask = (taskContainer) => {
@@ -52,9 +52,9 @@ export default class Task {
         let rightSide = document.createElement("div");
         rightSide.classList.add(...["truncate"]);
 
-        let title = document.createElement("p");
-        title.textContent = this.title;
-        title.classList.add(...["text-gray-900", "font-bold", "text-lg"]);
+        let name = document.createElement("p");
+        name.textContent = this.name;
+        name.classList.add(...["text-gray-900", "font-bold", "text-lg"]);
 
         let description = document.createElement("p");
         description.textContent = this.description;
@@ -64,7 +64,7 @@ export default class Task {
         priority.textContent = "P: " + this.priority;
         priority.classList.add(...["text-gray-600", "text-sm"]);
 
-        rightSide.append(title, description, priority);
+        rightSide.append(name, description, priority);
 
         task.append(leftSide, rightSide);
         taskContainer.appendChild(task);
