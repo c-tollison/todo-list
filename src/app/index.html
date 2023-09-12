@@ -10,13 +10,49 @@
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body class="text-[#fffffe] bg-[#16161a]">
-        <div id="taskContainer"></div>
-        <button
-            id="addTaskButton"
-            class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border py-2 px-4 rounded"
+        <nav
+            class="w-full h-16 border-b border-zinc-700 flex items-center p-2 justify-between"
         >
-            Click me to add item
-        </button>
+            <div class="flex items-center gap-4">
+                <i id="toggleSideBar" class="material-icons">menu</i>
+                <i class="material-icons">home</i>
+            </div>
+
+            <h1 class="text-lg">Todo List</h1>
+        </nav>
+
+        <div class="w-full flex flex-col items-center p-8 gap-4">
+            <div id="taskContainer" class="flex flex-col gap-4"></div>
+            <button
+                id="addTaskButton"
+                class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border py-2 px-4 rounded w-32 flex justify-center items-center"
+            >
+                <i class="material-icons">add</i>
+                <p>Add task</p>
+            </button>
+        </div>
+
+        <div
+            id="sideBar"
+            class="flex flex-col gap-16 h-full w-44 fixed z-1 top-16 overflow-x:hidden px-4 py-20 background bg-[#16161a] border-r border-zinc-700 -left-44 transition-all"
+        >
+            <div class="flex flex-col gap-4">
+                <a>Inbox</a>
+                <a>Today</a>
+                <a>Upcoming</a>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <h2>Projects</h2>
+                <button
+                    id="addProjectButton"
+                    class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border rounded w-32 flex justify-center items-center"
+                >
+                    <i class="material-icons">add</i>
+                    <p class="text-sm">Add project</p>
+                </button>
+            </div>
+        </div>
 
         <div
             id="taskModal"
@@ -26,13 +62,16 @@
             <form
                 id="taskForm"
                 class="w-full max-w-lg p-4 rounded border border-zinc-700"
+                onclick="event.stopPropagation();"
             >
+                <button id="modalCloseButton" class="float-right">
+                    <i class="material-icons">close</i>
+                </button>
                 <input
                     class="appearance-none bg-transparent border-b border-[#7f5af0] w-full px-2 py-1 focus:outline-none mb-4 text-lg"
                     type="text"
                     placeholder="Task Name"
                     id="taskName"
-                    ;
                 />
                 <input
                     class="appearance-none bg-transparent border-b border-[#7f5af0] w-full px-2 py-1 focus:outline-none mb-4 text-sm"
