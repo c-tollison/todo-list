@@ -34,7 +34,7 @@
 
         <div
             id="sideBar"
-            class="flex flex-col gap-16 h-full w-44 fixed z-1 top-16 overflow-x:hidden px-4 py-20 background bg-[#16161a] border-r border-zinc-700 -left-44 transition-all"
+            class="flex flex-col gap-16 h-full w-44 fixed z-1 top-16 overflow-x:hidden px-4 py-10 background bg-[#16161a] border-r border-zinc-700 -left-44 transition-all"
         >
             <div class="flex flex-col gap-4">
                 <a>Inbox</a>
@@ -44,13 +44,37 @@
 
             <div class="flex flex-col gap-4">
                 <h2>Projects</h2>
-                <button
-                    id="addProjectButton"
-                    class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border rounded w-32 flex justify-center items-center"
-                >
-                    <i class="material-icons">add</i>
-                    <p class="text-sm">Add project</p>
-                </button>
+                <div id="projectContainer" class="pl-4"></div>
+                <div>
+                    <button
+                        id="addProjectButton"
+                        class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border rounded w-32 flex justify-center items-center"
+                    >
+                        <i class="material-icons">add</i>
+                        <p class="text-sm">Add project</p>
+                    </button>
+                    <form
+                        id="projectForm"
+                        onsubmit="event.stopPropagation();"
+                        class="hidden"
+                    >
+                        <div class="flex items-center justify-between">
+                            <input
+                                id="projectFormInput"
+                                type="text"
+                                placeholder="Project 1"
+                                class="appearance-none bg-transparent border-b border-[#7f5af0] w-3/4 px-2 py-1 focus:outline-none mb-4 text-sm"
+                            />
+                            <button><i class="material-icons">add</i></button>
+                        </div>
+                        <p
+                            id="projectValidator"
+                            class="text-xs text-red-500 hidden"
+                        >
+                            * Please fill out
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
 
