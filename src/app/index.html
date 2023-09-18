@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -9,23 +9,23 @@
         />
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
-    <body class="text-[#fffffe] bg-[#16161a]">
+    <body class="bg-[#16161a] text-[#fffffe]">
         <nav
-            class="w-full h-16 border-b border-zinc-700 flex items-center p-2 justify-between"
+            class="flex h-16 w-full items-center justify-between border-b border-zinc-700 p-2"
         >
             <div class="flex items-center gap-4">
-                <i id="toggleSideBar" class="material-icons">menu</i>
+                <i id="sidebarIcon" class="material-icons">menu</i>
                 <i class="material-icons">home</i>
             </div>
 
             <h1 class="text-lg">Todo List</h1>
         </nav>
 
-        <div class="w-full flex flex-col items-center p-8 gap-4">
+        <div class="flex w-full flex-col items-center gap-4 p-8">
             <div id="taskContainer" class="flex flex-col gap-4"></div>
             <button
-                id="addTaskButton"
-                class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border py-2 px-4 rounded w-32 flex justify-center items-center"
+                id="openTaskModalButton"
+                class="flex w-32 items-center justify-center rounded border border-[#7f5af0] bg-[#7f5af0] px-4 py-2 hover:border-[#fffffe]"
             >
                 <i class="material-icons">add</i>
                 <p>Add task</p>
@@ -33,8 +33,8 @@
         </div>
 
         <div
-            id="sideBar"
-            class="flex flex-col gap-16 h-full w-44 fixed z-1 top-16 overflow-x:hidden px-4 py-10 background bg-[#16161a] border-r border-zinc-700 -left-44 transition-all"
+            id="sidebar"
+            class="z-1 overflow-x:hidden background fixed -left-44 top-16 flex h-full w-44 flex-col gap-16 border-r border-zinc-700 bg-[#16161a] px-4 py-10 transition-all"
         >
             <div class="flex flex-col gap-4">
                 <a>Inbox</a>
@@ -48,7 +48,7 @@
                 <div>
                     <button
                         id="addProjectButton"
-                        class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border rounded w-32 flex justify-center items-center"
+                        class="flex w-32 items-center justify-center rounded border border-[#7f5af0] bg-[#7f5af0] hover:border-[#fffffe]"
                     >
                         <i class="material-icons">add</i>
                         <p class="text-sm">Add project</p>
@@ -63,13 +63,13 @@
                                 id="projectFormInput"
                                 type="text"
                                 placeholder="Project 1"
-                                class="appearance-none bg-transparent border-b border-[#7f5af0] w-3/4 px-2 py-1 focus:outline-none mb-4 text-sm"
+                                class="mb-4 w-3/4 appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none"
                             />
                             <button><i class="material-icons">add</i></button>
                         </div>
                         <p
                             id="projectValidator"
-                            class="text-xs text-red-500 hidden"
+                            class="hidden text-xs text-red-500"
                         >
                             * Please fill out
                         </p>
@@ -81,38 +81,38 @@
         <div
             id="taskModal"
             tabindex="-1"
-            class="hidden fixed w-full h-full z-50 inset-0 flex justify-center items-center"
+            class="fixed inset-0 z-50 flex hidden h-full w-full items-center justify-center"
         >
             <form
                 id="taskForm"
-                class="w-full max-w-lg p-4 rounded border border-zinc-700"
+                class="w-full max-w-lg rounded border border-zinc-700 p-4"
                 onclick="event.stopPropagation();"
             >
                 <button id="modalCloseButton" class="float-right">
                     <i class="material-icons">close</i>
                 </button>
                 <input
-                    class="appearance-none bg-transparent border-b border-[#7f5af0] w-full px-2 py-1 focus:outline-none mb-4 text-lg"
+                    class="mb-4 w-full appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-lg focus:outline-none"
                     type="text"
                     placeholder="Task Name"
                     id="taskName"
                 />
                 <input
-                    class="appearance-none bg-transparent border-b border-[#7f5af0] w-full px-2 py-1 focus:outline-none mb-4 text-sm"
+                    class="mb-4 w-full appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none"
                     type="text"
                     placeholder="Description"
                     id="taskDescription"
                 />
                 <div class="flex w-full justify-between">
                     <input
-                        class="appearance-none bg-transparent border-b border-[#7f5af0] px-2 py-1 focus:outline-none w-1/3 dark:[color-scheme:dark] text-sm"
+                        class="w-1/3 appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none dark:[color-scheme:dark]"
                         type="date"
                         id="taskDueDate"
                     />
 
-                    <div class="relative w-1/3 mt-1">
+                    <div class="relative mt-1 w-1/3">
                         <select
-                            class="appearance-none bg-transparent border-b border-[#7f5af0] px-2 py-1 focus:outline-none w-full h-full text-sm"
+                            class="h-full w-full appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none"
                             id="taskPriority"
                         >
                             >
@@ -128,7 +128,7 @@
                     </div>
 
                     <button
-                        class="bg-[#7f5af0] hover:border-[#fffffe] border-[#7f5af0] border py-2 px-4 rounded flex justify-center items-center"
+                        class="flex items-center justify-center rounded border border-[#7f5af0] bg-[#7f5af0] px-4 py-2 hover:border-[#fffffe]"
                         type="submit"
                     >
                         <i class="material-icons">add</i>
