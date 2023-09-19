@@ -22,11 +22,14 @@ export default class ProjectView {
         this.projectFormInput.focus();
     }
 
-    addProjectsToSideBar(projectName) {
+    addProjectsToSideBar(projectName, index) {
         let projectLink = document.createElement("p");
         projectLink.innerText = projectName;
-        projectLink.classList.add("text-sm");
+        projectLink.classList.add(...["text-sm", "hover:text-[#7f5af0]"]);
+
+        projectLink.setAttribute("value", index);
         document.getElementById("projectContainer").appendChild(projectLink);
+        return projectLink;
     }
 
     resetForm() {

@@ -1,8 +1,9 @@
 import Task from "../models/Task";
 
 export default class TaskController {
-    constructor(user, taskModalView, taskView) {
+    constructor(user, screen, taskModalView, taskView) {
         this.user = user;
+        this.screen = screen;
         this.taskView = taskView;
         this.taskModalView = taskModalView;
 
@@ -19,7 +20,14 @@ export default class TaskController {
             const formValues = this.taskModalView.getFormData();
             const newTask = new Task(formValues);
             this.user.projects[formValues.project].tasks.push(newTask);
-            this.taskView.renderTask(newTask);
+
+            if (
+                this.screen.getScreen() === "inbox" ||
+                this.screen.getScreen() ===
+                    this.user.projects[newTask.project].name
+            ) {
+                this.taskView.renderTask(newTask);
+            }
             this.taskModalView.closeModal();
         });
 

@@ -38,4 +38,12 @@ export default class TaskModalView {
             project: document.getElementById("taskProject").value,
         };
     }
+
+    hideOpenModalButton() {
+        this.openModalButton.classList.add("hidden");
+    }
+
+    unhideOpenModalButton() {
+        this.openModalButton.classList.remove("hidden");
+    }
 }
