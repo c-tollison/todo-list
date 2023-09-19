@@ -37,9 +37,9 @@
             class="z-1 overflow-x:hidden background fixed -left-44 top-16 flex h-full w-44 flex-col gap-16 border-r border-zinc-700 bg-[#16161a] px-4 py-10 transition-all"
         >
             <div class="flex flex-col gap-4">
-                <a>Inbox</a>
-                <a>Today</a>
-                <a>Upcoming</a>
+                <a id="inboxButton">Inbox</a>
+                <a id="todayButton">Today</a>
+                <a id="upcomingButton">Upcoming</a>
             </div>
 
             <div class="flex flex-col gap-4">
@@ -110,7 +110,7 @@
                         id="taskDueDate"
                     />
 
-                    <div class="relative mt-1 w-1/3">
+                    <div class="relative mt-1 w-1/4">
                         <select
                             class="h-full w-full appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none"
                             id="taskPriority"
@@ -119,6 +119,20 @@
                             <option value="1">Low</option>
                             <option value="2">Medium</option>
                             <option value="3">High</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center"
+                        >
+                            <i class="material-icons">expand_more</i>
+                        </div>
+                    </div>
+
+                    <div class="relative mt-1 w-1/4">
+                        <select
+                            class="h-full w-full appearance-none border-b border-[#7f5af0] bg-transparent px-2 py-1 text-sm focus:outline-none"
+                            id="taskProject"
+                        >
+                            >
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center"

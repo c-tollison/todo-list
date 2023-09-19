@@ -1,11 +1,10 @@
 import Task from "../models/Task";
-import TaskModalView from "../views/task/TaskModalView";
-import TaskView from "../views/task/TaskView";
 
 export default class TaskController {
-    constructor() {
-        this.taskView = new TaskView();
-        this.taskModalView = new TaskModalView();
+    constructor(user, taskModalView, taskView) {
+        this.user = user;
+        this.taskView = taskView;
+        this.taskModalView = taskModalView;
 
         this.taskModalView.openModalButton.addEventListener("click", () => {
             this.taskModalView.openModal();
@@ -19,6 +18,7 @@ export default class TaskController {
             e.preventDefault();
             const formValues = this.taskModalView.getFormData();
             const newTask = new Task(formValues);
+            this.user.projects[formValues.project].tasks.push(newTask);
             this.taskView.renderTask(newTask);
             this.taskModalView.closeModal();
         });
@@ -27,5 +27,7 @@ export default class TaskController {
             e.preventDefault();
             this.taskModalView.closeModal();
         });
+
+        this.taskModalView.updateProjectDropdown(user.projects[0].name, 0);
     }
 }

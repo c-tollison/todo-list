@@ -4,5 +4,6 @@ export default class Task {
         this.description = formValues.description;
         this.dueDate = formValues.dueDate;
         this.priority = formValues.priority;
+        this.project = formValues.project;
     }
 }

@@ -2,7 +2,9 @@ import Project from "../models/Project";
 import ProjectView from "../views/project/ProjectView";
 
 export default class ProjectController {
-    constructor() {
+    constructor(user, taskModalView) {
+        this.user = user;
+        this.taskModalView = taskModalView;
         this.projectView = new ProjectView();
 
         this.projectView.projectForm.addEventListener("keypress", (e) => {
@@ -22,6 +24,11 @@ export default class ProjectController {
 
     createProject() {
         let project = new Project(this.projectView.projectFormInput.value);
+        this.user.projects.push(project);
+        this.taskModalView.updateProjectDropdown(
+            project.name,
+            this.user.projects.length - 1,
+        );
         return project.name;
     }
 

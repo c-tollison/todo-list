@@ -3,6 +3,7 @@ export default class TaskModalView {
         this.openModalButton = document.getElementById("openTaskModalButton");
         this.taskModalWrapper = document.getElementById("taskModal");
         this.taskForm = document.getElementById("taskForm");
+        this.taskProject = document.getElementById("taskProject");
         this.modalCloseButton = document.getElementById("modalCloseButton");
 
         this.taskForm.addEventListener("keypress", (e) => {
@@ -10,6 +11,13 @@ export default class TaskModalView {
                 e.preventDefault();
             }
         });
+    }
+
+    updateProjectDropdown(project, index) {
+        let option = document.createElement("option");
+        option.setAttribute("value", index);
+        option.textContent = project;
+        this.taskProject.appendChild(option);
     }
 
     openModal() {
@@ -27,6 +35,7 @@ export default class TaskModalView {
             description: document.getElementById("taskDescription").value,
             dueDate: document.getElementById("taskDueDate").value,
             priority: document.getElementById("taskPriority").value,
+            project: document.getElementById("taskProject").value,
         };
     }
 }
