@@ -85,9 +85,7 @@ export default class TaskView {
         let icon = document.createElement("span");
         icon.classList.add(...["material-icons"]);
         icon.textContent = "more_vert";
-        icon.addEventListener("click", () => {
-            console.log("hello world");
-        });
+        icon.addEventListener("click", () => {});
 
         editButton.append(icon);
 
