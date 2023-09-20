@@ -59,8 +59,6 @@ export default class ProjectController {
         if (this.user.projects.length > 0 && this.screen.getScreen() != index) {
             this.clearContainer();
             this.screen.setScreen(index);
-            console.log("ehll");
-
             for (let i = 0; i < project.tasks.length; i++) {
                 this.taskView.renderTask(
                     project.tasks[i],
