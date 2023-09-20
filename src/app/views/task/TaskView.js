@@ -1,7 +1,11 @@
-export default class TaskView {
-    constructor() {}
+import { isFuture, isToday, parseISO } from "date-fns";
 
-    renderTask = (task, finishTask, index, editTask) => {
+export default class TaskView {
+    constructor(user) {
+        this.user = user;
+    }
+
+    renderTask = (task, index, editTask) => {
         let taskElement = document.createElement("div");
         taskElement.classList.add(
             ...[
@@ -33,7 +37,9 @@ export default class TaskView {
             ],
         );
         checkButton.addEventListener("click", () => {
-            finishTask(task.project, index);
+            this.user.finishTask(task.project, index);
+            this.clearTasks();
+            this.loadTasks(task.project);
         });
 
         leftSide.append(checkButton);
@@ -86,10 +92,10 @@ export default class TaskView {
         icon.classList.add(...["material-icons"]);
         icon.textContent = "more_vert";
         icon.addEventListener("click", () => {
-            let newTask = this.editTaskInput();
-            if (newTask) {
-                editTask(task.project, index, newTask);
-            }
+            let newTask = this.editTaskInput(task);
+            // if (newTask) {
+            //     editTask(task.project, index, newTask);
+            // }
         });
 
         editButton.append(icon);
@@ -100,11 +106,11 @@ export default class TaskView {
         document.getElementById("taskContainer").appendChild(taskElement);
     };
 
-    editTaskInput() {
-        this.createTaskModal();
+    editTaskInput(task) {
+        this.createTaskModal(task);
     }
 
-    createTaskModal() {
+    createTaskModal(task) {
         const modalDiv = document.createElement("div");
         modalDiv.id = "editTaskModal";
         modalDiv.tabIndex = -1;
@@ -145,13 +151,16 @@ export default class TaskView {
         const closeButton = document.createElement("button");
         closeButton.id = "editModalCloseButton";
         closeButton.classList.add("float-right");
+
         const closeIcon = document.createElement("i");
         closeIcon.classList.add("material-icons");
         closeIcon.textContent = "close";
+
         closeButton.appendChild(closeIcon);
 
         closeButton.addEventListener("click", (e) => {
             e.stopPropagation();
+            e.preventDefault();
             document.body.removeChild(modalDiv);
         });
 
@@ -173,6 +182,7 @@ export default class TaskView {
         taskNameInput.type = "text";
         taskNameInput.placeholder = "Task Name";
         taskNameInput.id = "editTaskName";
+        taskNameInput.value = task.name;
 
         const taskDescriptionInput = document.createElement("input");
         taskDescriptionInput.classList.add(
@@ -190,6 +200,7 @@ export default class TaskView {
         taskDescriptionInput.type = "text";
         taskDescriptionInput.placeholder = "Description";
         taskDescriptionInput.id = "editTaskDescription";
+        taskDescriptionInput.value = task.description;
 
         const flexContainer = document.createElement("div");
         flexContainer.classList.add("flex", "w-full", "justify-between");
@@ -209,13 +220,19 @@ export default class TaskView {
         );
         dueDateInput.type = "date";
         dueDateInput.id = "editTaskDueDate";
+        dueDateInput.value = task.dueDate;
 
         const priorityDropdown = this.createDropdown(
             ["Low", "Medium", "High"],
             "editTaskPriority",
+            task.priority,
         );
 
-        const projectDropdown = this.createDropdown([], "editTaskProject");
+        const projectDropdown = this.createDropdown(
+            [],
+            "editTaskProject",
+            task.project,
+        );
 
         const addButton = document.createElement("button");
         addButton.classList.add(
@@ -236,6 +253,10 @@ export default class TaskView {
         addIcon.textContent = "add";
         addButton.appendChild(addIcon);
 
+        addButton.addEventListener("click", (e) => {
+            e.preventDefault();
+        });
+
         flexContainer.append(
             dueDateInput,
             priorityDropdown,
@@ -254,7 +275,7 @@ export default class TaskView {
         document.body.appendChild(modalDiv);
     }
 
-    createDropdown(options, id) {
+    createDropdown(options, id, initialValue) {
         const dropdownDiv = document.createElement("div");
         dropdownDiv.classList.add("relative", "mt-1", "w-1/4");
 
@@ -273,10 +294,13 @@ export default class TaskView {
         );
         select.id = id;
 
-        options.forEach((option) => {
+        options.forEach((option, index) => {
             const opt = document.createElement("option");
-            opt.value = option;
+            opt.value = index;
             opt.textContent = option;
+            if (index === Number(initialValue)) {
+                opt.selected = true;
+            }
             select.appendChild(opt);
         });
 
@@ -297,5 +321,47 @@ export default class TaskView {
         dropdownDiv.append(select, iconDiv);
 
         return dropdownDiv;
+    }
+
+    clearTasks() {
+        const element = document.getElementById("taskContainer");
+
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
+    loadTasks(projectIndex = null) {
+        const currentScreen = this.user.screen.currentScreen;
+        if (
+            projectIndex > 0 &&
+            !["inbox", "today", "upcoming"].includes(currentScreen)
+        ) {
+            const projectTasks = this.user.projects[projectIndex].tasks;
+            for (let i = 0; i < projectTasks.length; i++) {
+                this.renderTask(projectTasks[i], i, this.user.editTask);
+            }
+        } else {
+            for (let i = 0; i < this.user.projects.length; i++) {
+                const project = this.user.projects[i];
+                for (let j = 0; j < project.tasks.length; j++) {
+                    const task = project.tasks[j];
+                    if (currentScreen === "inbox") {
+                        this.renderTask(task, j, this.user.editTask);
+                    } else if (currentScreen === "today") {
+                        if (isToday(parseISO(task.dueDate))) {
+                            this.renderTask(task, j, this.user.editTask);
+                        }
+                    } else if (currentScreen === "upcoming") {
+                        if (
+                            !isToday(parseISO(task.dueDate)) &&
+                            isFuture(parseISO(task.dueDate))
+                        ) {
+                            this.renderTask(task, j, this.user.editTask);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

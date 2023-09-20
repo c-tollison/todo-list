@@ -1,5 +1,6 @@
 export default class TaskModalView {
-    constructor() {
+    constructor(user) {
+        this.user = user;
         this.openModalButton = document.getElementById("openTaskModalButton");
         this.taskModalWrapper = document.getElementById("taskModal");
         this.taskForm = document.getElementById("taskForm");
