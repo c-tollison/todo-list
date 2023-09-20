@@ -1,7 +1,7 @@
 export default class TaskView {
     constructor() {}
 
-    renderTask = (task) => {
+    renderTask = (task, finishTask, index) => {
         let taskElement = document.createElement("div");
         taskElement.classList.add(
             ...[
@@ -14,7 +14,7 @@ export default class TaskView {
                 "shadow",
                 "flex",
                 "bg-[#242629]",
-                "gap-6",
+                "justify-between",
                 "hover:border-gray-700",
             ],
         );
@@ -32,27 +32,68 @@ export default class TaskView {
                 "hover:border-[#94a1b2]",
             ],
         );
+        checkButton.addEventListener("click", () => {
+            finishTask(task.project, index);
+        });
 
         leftSide.append(checkButton);
 
-        let rightSide = document.createElement("div");
-        rightSide.classList.add(...["truncate"]);
+        let middle = document.createElement("div");
+        middle.classList.add(...["truncate", "w-4/5"]);
 
         let name = document.createElement("p");
         name.textContent = task.name;
-        name.classList.add(...["text-[#fffffe]", "font-bold", "text-lg"]);
+        name.classList.add(
+            ...[
+                "text-[#fffffe]",
+                "font-bold",
+                "text-lg",
+                "text-ellipsis",
+                "overflow-hidden",
+            ],
+        );
 
         let description = document.createElement("p");
         description.textContent = task.description;
-        description.classList.add(...["text-[#94a1b2]", "text-sm"]);
+        description.classList.add(
+            ...[
+                "text-[#94a1b2]",
+                "text-sm",
+                "text-ellipsis",
+                "overflow-hidden",
+            ],
+        );
+
+        let bottomRow = document.createElement("div");
+        bottomRow.classList.add(...["flex", "justify-between"]);
 
         let priority = document.createElement("p");
-        priority.textContent = "P: " + task.priority;
+        priority.textContent = "Priority: " + task.priority;
         priority.classList.add(...["text-[#94a1b2]", "text-sm"]);
 
-        rightSide.append(name, description, priority);
+        let date = document.createElement("p");
+        date.textContent = task.dueDate;
+        date.classList.add(...["text-[#94a1b2]", "text-sm"]);
 
-        taskElement.append(leftSide, rightSide);
+        bottomRow.append(priority, date);
+
+        middle.append(name, description, bottomRow);
+
+        let rightSide = document.createElement("div");
+        let editButton = document.createElement("button");
+
+        let icon = document.createElement("span");
+        icon.classList.add(...["material-icons"]);
+        icon.textContent = "more_vert";
+        icon.addEventListener("click", () => {
+            console.log("hello world");
+        });
+
+        editButton.append(icon);
+
+        rightSide.append(editButton);
+
+        taskElement.append(leftSide, middle, rightSide);
         document.getElementById("taskContainer").appendChild(taskElement);
     };
 }

@@ -42,7 +42,11 @@ export default class SidebarController {
             for (let i = 0; i < this.user.projects.length; i++) {
                 let project = this.user.projects[i];
                 for (let j = 0; j < project.tasks.length; j++) {
-                    this.taskView.renderTask(project.tasks[j]);
+                    this.taskView.renderTask(
+                        project.tasks[j],
+                        this.user.finishTask,
+                        j,
+                    );
                 }
             }
         }
@@ -59,7 +63,11 @@ export default class SidebarController {
                 let project = this.user.projects[i];
                 for (let j = 0; j < project.tasks.length; j++) {
                     if (isToday(parseISO(project.tasks[j].dueDate))) {
-                        this.taskView.renderTask(project.tasks[j]);
+                        this.taskView.renderTask(
+                            project.tasks[j],
+                            this.user.finishTask,
+                            j,
+                        );
                     }
                 }
             }
@@ -80,7 +88,11 @@ export default class SidebarController {
                         !isToday(parseISO(project.tasks[j].dueDate)) &&
                         isFuture(parseISO(project.tasks[j].dueDate))
                     ) {
-                        this.taskView.renderTask(project.tasks[j]);
+                        this.taskView.renderTask(
+                            project.tasks[j],
+                            this.user.finishTask,
+                            j,
+                        );
                     }
                 }
             }

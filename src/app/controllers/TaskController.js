@@ -20,13 +20,15 @@ export default class TaskController {
             const formValues = this.taskModalView.getFormData();
             const newTask = new Task(formValues);
             this.user.projects[formValues.project].tasks.push(newTask);
-
             if (
                 this.screen.getScreen() === "inbox" ||
-                this.screen.getScreen() ===
-                    this.user.projects[newTask.project].name
+                this.screen.getScreen() === newTask.project
             ) {
-                this.taskView.renderTask(newTask);
+                this.taskView.renderTask(
+                    newTask,
+                    this.user.finishTask,
+                    this.user.projects[newTask.project].tasks.length - 1,
+                );
             }
             this.taskModalView.closeModal();
         });

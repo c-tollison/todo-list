@@ -46,25 +46,27 @@ export default class ProjectController {
                 this.user.projects.length - 1,
             );
             projectButton.addEventListener("click", (e) => {
-                this.showProjects(e);
+                this.showTasks(e);
                 this.taskModalView.unhideOpenModalButton();
             });
             this.projectView.resetForm();
         }
     }
 
-    showProjects(e) {
+    showTasks(e) {
         const index = e.target.attributes.value.value;
         let project = this.user.projects[index];
-        if (
-            this.user.projects.length > 0 &&
-            this.screen.getScreen() != project.name
-        ) {
+        if (this.user.projects.length > 0 && this.screen.getScreen() != index) {
             this.clearContainer();
-            this.screen.setScreen(project.name);
+            this.screen.setScreen(index);
+            console.log("ehll");
 
             for (let i = 0; i < project.tasks.length; i++) {
-                this.taskView.renderTask(project.tasks[i]);
+                this.taskView.renderTask(
+                    project.tasks[i],
+                    this.user.finishTask,
+                    i,
+                );
             }
         }
     }
