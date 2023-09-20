@@ -28,6 +28,7 @@ export default class TaskController {
                     newTask,
                     this.user.finishTask,
                     this.user.projects[newTask.project].tasks.length - 1,
+                    this.user.editTask,
                 );
             }
             this.taskModalView.closeModal();

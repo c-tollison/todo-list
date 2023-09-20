@@ -64,6 +64,7 @@ export default class ProjectController {
                     project.tasks[i],
                     this.user.finishTask,
                     i,
+                    this.user.editTask,
                 );
             }
         }

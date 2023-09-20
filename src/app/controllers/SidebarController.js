@@ -46,6 +46,7 @@ export default class SidebarController {
                         project.tasks[j],
                         this.user.finishTask,
                         j,
+                        this.user.editTask,
                     );
                 }
             }
@@ -67,6 +68,7 @@ export default class SidebarController {
                             project.tasks[j],
                             this.user.finishTask,
                             j,
+                            this.user.editTask,
                         );
                     }
                 }
@@ -92,6 +94,7 @@ export default class SidebarController {
                             project.tasks[j],
                             this.user.finishTask,
                             j,
+                            this.user.editTask,
                         );
                     }
                 }

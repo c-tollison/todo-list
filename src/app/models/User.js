@@ -28,6 +28,14 @@ export default class User {
         this.addContentBack(this.projects[projectIndex].tasks);
     };
 
+    editTask = (projectIndex, index, updatedTask) => {
+        this.projects[projectIndex].tasks[index] = updatedTask;
+
+        this.clearContainer();
+
+        this.addContentBack(this.projects[projectIndex].tasks);
+    };
+
     clearContainer() {
         const element = document.getElementById("taskContainer");
 
@@ -42,7 +50,12 @@ export default class User {
             this.screen.getScreen() !== "upcoming"
         ) {
             for (let i = 0; i < tasks.length; i++) {
-                this.taskView.renderTask(tasks[i], this.finishTask, i);
+                this.taskView.renderTask(
+                    tasks[i],
+                    this.finishTask,
+                    i,
+                    this.editTask,
+                );
             }
         } else if (this.screen.getScreen() === "today") {
             for (let i = 0; i < this.projects.length; i++) {
@@ -53,6 +66,7 @@ export default class User {
                             project.tasks[j],
                             this.finishTask,
                             j,
+                            this.editTask,
                         );
                     }
                 }
@@ -69,6 +83,7 @@ export default class User {
                             project.tasks[j],
                             this.finishTask,
                             j,
+                            this.editTask,
                         );
                     }
                 }
