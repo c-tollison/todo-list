@@ -21,6 +21,11 @@ export default class SidebarController {
             this.taskModalView.unhideOpenModalButton();
         });
 
+        this.sidebarView.homeButton.addEventListener("click", () => {
+            this.setInboxScreen();
+            this.taskModalView.unhideOpenModalButton();
+        });
+
         this.sidebarView.todayButton.addEventListener("click", () => {
             this.setTodayBox();
             this.taskModalView.hideOpenModalButton();

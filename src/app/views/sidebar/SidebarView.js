@@ -5,6 +5,7 @@ export default class SidebarView {
         this.inboxButton = document.getElementById("inboxButton");
         this.todayButton = document.getElementById("todayButton");
         this.upcomingButton = document.getElementById("upcomingButton");
+        this.homeButton = document.getElementById("home");
     }
 
     toggleSidebar() {
