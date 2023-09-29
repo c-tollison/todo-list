@@ -1,5 +1,4 @@
 import Project from "../models/Project";
-import ProjectView from "../views/project/ProjectView";
 
 export default class ProjectController {
     constructor(user, taskModalView, taskView, projectView) {

@@ -1,5 +1,3 @@
-import SidebarView from "../views/sidebar/SidebarView";
-
 export default class SidebarController {
     constructor(user, taskModalView, taskView, sidebarView) {
         this.user = user;

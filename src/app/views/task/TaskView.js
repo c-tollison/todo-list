@@ -1,5 +1,7 @@
 import { isFuture, isToday, parseISO } from "date-fns";
 
+import Task from "../../models/Task";
+
 export default class TaskView {
     constructor(user) {
         this.user = user;
@@ -92,10 +94,7 @@ export default class TaskView {
         icon.classList.add(...["material-icons"]);
         icon.textContent = "more_vert";
         icon.addEventListener("click", () => {
-            let newTask = this.editTaskInput(task);
-            // if (newTask) {
-            //     editTask(task.project, index, newTask);
-            // }
+            this.createTaskModal(task, editTask, index);
         });
 
         editButton.append(icon);
@@ -106,11 +105,7 @@ export default class TaskView {
         document.getElementById("taskContainer").appendChild(taskElement);
     };
 
-    editTaskInput(task) {
-        this.createTaskModal(task);
-    }
-
-    createTaskModal(task) {
+    createTaskModal(task, editTask, index) {
         const modalDiv = document.createElement("div");
         modalDiv.id = "editTaskModal";
         modalDiv.tabIndex = -1;
@@ -229,7 +224,7 @@ export default class TaskView {
         );
 
         const projectDropdown = this.createDropdown(
-            [],
+            this.user.projects.map((project) => project.name),
             "editTaskProject",
             task.project,
         );
@@ -255,6 +250,18 @@ export default class TaskView {
 
         addButton.addEventListener("click", (e) => {
             e.preventDefault();
+            let newTask = new Task({
+                name: document.getElementById("editTaskName").value,
+                description: document.getElementById("editTaskDescription")
+                    .value,
+                dueDate: document.getElementById("editTaskDueDate").value,
+                priority: document.getElementById("editTaskPriority").value,
+                project: document.getElementById("editTaskProject").value,
+            });
+            editTask(task.project, index, newTask);
+            this.clearTasks();
+            this.loadTasks(newTask.project);
+            modalDiv.remove();
         });
 
         flexContainer.append(
